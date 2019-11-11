@@ -6,15 +6,25 @@ import spark.Response;
 
 public class TransferController {
 
-	private final TransferService repository;
+	private final TransferService service;
 
-	public TransferController(TransferService repository) {
-		this.repository = repository;
+	public TransferController(TransferService service) {
+		this.service = service;
 	}
 
-	JSONObject performTransfer(Request request, Response response) {
+	public String performTransfer(Request request, Response response) {
 		var json = new JSONObject(request.body());
-		return null;
+
+		var transferRequest = new TransferRequest();
+		transferRequest.setCreditAccountId(json.getString("credit_account_id"));
+		transferRequest.setDebitAccountId(json.getString("debit_account_id"));
+		transferRequest.setAmount(json.getString("amount"));
+		transferRequest.setCurrency(json.getString("currency"));
+
+		this.service.transfer(transferRequest);
+
+		response.status(200);
+		return "You have transferred successfully!";
 	}
 
 }

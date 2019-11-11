@@ -1,6 +1,7 @@
-package org.example.transfer;
+package org.example.account;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -10,19 +11,15 @@ public class AccountRepository {
 
 	private Map<String, Account> accounts = new ConcurrentHashMap<>();
 
-	public void add(Account account) {
-		this.accounts.put(account.getAccountNumber(), account);
+	public void save(Account account) {
+		this.accounts.put(account.getId(), account);
 	}
 
-	public Account getAccount(String accountNumber) {
-		if (this.accounts.containsKey(accountNumber)) {
-			return this.accounts.get(accountNumber);
+	public Account findAccount(String accountId) {
+		if (this.accounts.containsKey(accountId)) {
+			return this.accounts.get(accountId);
 		}
 		throw new AccountNumberNotFoundException();
-	}
-
-	public void save(Account account) {
-		this.accounts.put(account.getAccountNumber(), account);
 	}
 
 }
