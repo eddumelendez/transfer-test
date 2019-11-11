@@ -3,14 +3,13 @@ package org.example.transfer;
 import org.json.JSONObject;
 
 import static spark.Spark.before;
-import static spark.Spark.exception;
 import static spark.Spark.halt;
 import static spark.Spark.post;
 
 public class Main {
 
 	public static void main(String[] args) {
-		var transferService = new TransferController();
+		var transferController = new TransferController();
 
 		before(((request, response) -> {
 			if (request.requestMethod().equals("POST") &&
@@ -21,8 +20,6 @@ public class Main {
 			}
 		}));
 
-		post("/transfers", transferService::performTransfer);
-
-		exception();
+		post("/transfers", transferController::performTransfer);
 	}
 }
