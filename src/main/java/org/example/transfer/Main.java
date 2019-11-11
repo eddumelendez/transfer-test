@@ -9,7 +9,9 @@ import static spark.Spark.post;
 public class Main {
 
 	public static void main(String[] args) {
-		var transferController = new TransferController();
+		var transferRepository = new TransferRepository();
+		var transferService = new TransferService(transferRepository);
+		var transferController = new TransferController(transferService);
 
 		before(((request, response) -> {
 			if (request.requestMethod().equals("POST") &&
